@@ -18,6 +18,7 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,os.path.join(BASE_DIR,'apps'))   #多个app集中放入到apps目录下时需要
+sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))  # 添加extra_apps目录到环境变量；
 
 
 # Quick-start development settings - unsuitable for production
