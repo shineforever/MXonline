@@ -133,4 +133,9 @@ USE_TZ = False   #默认是Ture，时间是utc时间，由于我们要用本地�
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+#设置static目录，存放静态文件；
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    (os.path.join(BASE_DIR, 'static'))
+]
