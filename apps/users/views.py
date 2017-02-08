@@ -21,4 +21,4 @@ def user_login(request):
         else:
             return render(request,'login.html',{})
     elif request.method == 'GET':
-        return render(request,'index.html')
+        return render(request,'login.html')
