@@ -32,6 +32,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#自定义用户认证模块
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
+
 
 # Application definition
 
@@ -89,13 +94,24 @@ WSGI_APPLICATION = 'MXonline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '10.0.0.132',
+        'PORT': 33066,
+        'NAME': 'mxonline',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'CHARSET': 'utf8'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
