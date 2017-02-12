@@ -31,7 +31,7 @@ class ActiveUserView(View):
     邮件激活码
     """
     def get(self,request,active_code):
-        all_records = EmailVerifyRecord.objects.filter(active_code)
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
         # print all_records
         if all_records:
             for record in all_records:
