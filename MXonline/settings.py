@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 #重载user模块,APP名称+class
@@ -94,22 +95,10 @@ WSGI_APPLICATION = 'MXonline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '10.0.0.132',
-        'PORT': 33066,
-        'NAME': 'mxonline',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'CHARSET': 'utf8'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -155,3 +144,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     (os.path.join(BASE_DIR, 'static'))
 ]
+
+EMAIL_HOST = "smtp.163.com"
