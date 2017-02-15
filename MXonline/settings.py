@@ -95,10 +95,22 @@ WSGI_APPLICATION = 'MXonline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'mxonline',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '10.0.0.132',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '33066',                      # Set to empty string for default.
     }
 }
 
@@ -147,7 +159,7 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = "smtp.163.com"
 EMAIL_PORT = 25
-EMAIL_HOST_USER = "micrm_noreply@163.comm"
-EMAIL_HOST_PASSWORD = "70she@2014"
+EMAIL_HOST_USER = "nagios2011@163.com"
+EMAIL_HOST_PASSWORD = "nagios@2011"
 EMAIL_USE_TLS = False
-EMAIL_FROM = "micrm_noreply@163.com"
+EMAIL_FROM = "nagios2011@163.com"
