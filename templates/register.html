@@ -13,7 +13,7 @@
 <body>
 <div class="loginbox dialogbox">
     <h1>账号登录</h1>
-    <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+    <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
     <div class="cont">
         <form id="jsLoginForm" autocomplete="off">
             <div class="box">
@@ -146,6 +146,7 @@
                             {{ register_form.captcha }}
                         </div>
                         <div class="error btns" id="jsEmailTips">{% for key,error in register_form.errors.items %}{{ error }}{% endfor %}</div>
+                        <div class="error btns" id="jsEmailTips">{{ msg }}</div>
                         <div class="auto-box marb8">
                         </div>
                         <input class="btn btn-green" id="jsEmailRegBtn" type="submit" value="注册并登录" />
