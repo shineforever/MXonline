@@ -23,11 +23,33 @@ class Course(models.Model):
     fav_nums = models.IntegerField(default=0,verbose_name=u'收藏次数')
     image = models.ImageField(upload_to='courses/%Y/%m',verbose_name=u'封面图',max_length=100)
     click_nums = models.IntegerField(default=0,verbose_name=u'点击数')
+    category = models.CharField(max_length=300,default=u'后端开发',verbose_name=u'课程类别')
     add_time = models.DateTimeField(default=datetime.now,verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        """
+        获取章节数量（自定义）
+        :return:
+        """
+        return self.lesson_set.all().count()
+
+    def get_learn_nums(self):
+        """
+        获得学习该课程的人数,取前5（通过外键来反查）
+        :return:
+        """
+        return self.usercourse_set.all()[:5]
+
+    def get_learn_users(self):
+        """
+        获得学习学生
+        :return:
+        """
+        return self.usercourse_set.all()[:5]
 
     def __unicode__(self):
         return self.name

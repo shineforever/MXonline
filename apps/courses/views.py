@@ -42,6 +42,8 @@ class CourseDetailView(View):
     """
     def get(self,request,course_id):
         course = Course.objects.get(id=int(course_id))
+        course.click_nums += 1
+        course.save() #课程点击数
         return render(request,'course-detail.html',{
             'course':course
         })
