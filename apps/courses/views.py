@@ -5,6 +5,7 @@ from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Course
+from operation.models import UserFavorite
 
 # Create your views here.
 
@@ -44,6 +45,25 @@ class CourseDetailView(View):
         course = Course.objects.get(id=int(course_id))
         course.click_nums += 1
         course.save() #课程点击数
+
+        has_fav_course = False
+        has_fav_org = False
+        if request.user.is_authenticated():  #判断用户是否登录
+            if UserFavorite.objects.filter(user=request.user,fav_id=course.id,fav_type=1):
+                has_fav_course = True
+            if UserFavorite.objects.filter(user=request.user,fav_id=course.course_org.id,fav_type=2):
+                has_fav_org = True
+
+        tag = course.tag
+        #如果存在相关课程的tag，就推荐相关的tag
+        if tag:
+            relate_courses = Course.objects.filter(tag=tag)[:2]
+        else:
+            relate_courses = []   #如果没有推荐的课程，参数也应该为一个list，要不然模板里面for循环就会报错！
+
         return render(request,'course-detail.html',{
-            'course':course
+            'course':course,
+            'relate_courses':relate_courses,
+            'has_fav_course':has_fav_course,
+            'has_fav_org':has_fav_org
         })
