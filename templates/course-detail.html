@@ -147,9 +147,10 @@
 {% endblock %}
 
 {% block custom_js %}
-    <script type="text/javascript">
+<script type="text/javascript">
     //收藏分享
-    function add_fav(current_elem, fav_id, fav_type){
+//收藏分享
+function add_fav(current_elem, fav_id, fav_type){
     $.ajax({
         cache: false,
         type: "POST",
@@ -175,14 +176,13 @@
     });
 }
 
-$('.jsLeftBtn').on('click', function(){
+$('#jsLeftBtn').on('click', function(){
     add_fav($(this), {{ course.id }}, 1);
 });
 
-$('.jsRightBtn').on('click', function(){
+$('#jsRightBtn').on('click', function(){
     add_fav($(this), {{ course.course_org.id }}, 2);
 });
-
 </script>
 {% endblock %}
 
