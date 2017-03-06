@@ -6,7 +6,7 @@ Created on: 2017-02-21 16:13
 """
 from django.conf.urls import url,include
 
-from .views import OrgView,AddUserAskView,OrgHomeView,OrgCourseView,OrgDescView,OrgTeacherView,AddFavView
+from .views import OrgView,AddUserAskView,OrgHomeView,OrgCourseView,OrgDescView,OrgTeacherView,AddFavView,TeacherListView
 
 
 urlpatterns = [
@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^teacher/(?P<course_id>\d+)/$', OrgTeacherView.as_view(),name="org_teacher"),
     #机构收藏页面
     url(r'^add_fav/$', AddFavView.as_view(),name="add_fav"),
+    #讲师列表页面
+    url(r'^teacher/list/$', TeacherListView.as_view(),name="teacher_list"),
 ]
 
