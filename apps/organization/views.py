@@ -5,7 +5,7 @@ from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
-from .models import CityDict,CourseOrg,Teacher
+from .models import CityDict,CourseOrg,Teacher,CourseOrg
 from .forms import UserAskForm
 from operation.models import UserFavorite
 from courses.models import Course
@@ -218,4 +218,37 @@ class TeacherListView(View):
             'sort':sort
 
         })
+
+class TeacherDetailView(View):
+    """
+    讲师详情页
+    """
+
+    def get(self, request,teacher_id):
+        teacher = Teacher.objects.get(id=int(teacher_id))
+        teacher_courses = Course.objects.filter(teacher=teacher)
+
+        # 讲师排行榜
+        sorted_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
+
+        #讲师机构
+        teacher_org = CourseOrg.objects.get(teacher=teacher)
+
+        has_teacher_fav = False
+        if UserFavorite.objects.filter(user=request.user,fav_type=3,fav_id=teacher.id):
+            has_teacher_fav=True
+
+        has_org_fav = False
+        if UserFavorite.objects.filter(user=request.user, fav_type=2,fav_id=teacher_org.id):
+            has_org_fav = True
+
+        return render(request,'teacher-detail.html',{
+            'teacher':teacher,
+            'teacher_courses':teacher_courses,
+            'sorted_teachers':sorted_teachers,
+            'teacher_org':teacher_org,
+            'has_teacher_fav':has_teacher_fav,
+            'has_org_fav':has_org_fav
+        })
+
 
