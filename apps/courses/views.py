@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.views.generic import View
+from django.db.models import Q
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
@@ -15,6 +16,11 @@ class CourseListView(View):
     def get(self,request):
         all_courses = Course.objects.all().order_by('-add_time')
         hot_courses = Course.objects.all().order_by('-click_nums')[:3]
+
+        search_keywords = request.GET.get('keywords','')
+        #搜索框中课程搜索
+        if search_keywords:
+            all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
 
         # 排序
         sort = request.GET.get('sort', '')  #获得get请求中url里面的sort参数值；
