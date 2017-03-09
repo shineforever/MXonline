@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import make_password  #密码加密函数
 from .models import UserProfile,EmailVerifyRecord
 from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm
 from utils.email_send import send_register_email
+from utils.mixin_utils import LoginRequiredMixin
 
 # Create your views here.
 
@@ -120,6 +121,7 @@ class ResetView(View):
             return render(request, 'active_fail.html')
         return render(request, "login.html")
 
+
 class ModifyPwdView(View):
     def post(self,request):
         modify_form = ModifyPwdForm(request.POST)
@@ -156,3 +158,11 @@ class ModifyPwdView(View):
 #             return render(request,'login.html',{"msg":"用户或者密码错误！"})
 #     elif request.method == 'GET':
 #         return render(request,'login.html')
+
+
+class UserInfoView(LoginRequiredMixin,View):
+    """
+    用户信息，需要登录才可查看
+    """
+    def get(self,request):
+        return render(request,'usercenter-info.html','')

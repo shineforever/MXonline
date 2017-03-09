@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^org/', include('organization.urls',namespace='org')),
     #课程相关
     url(r'^course/', include('courses.urls',namespace='course')),
+    #用户中心相关
+    url(r'^users/', include('users.urls',namespace='users')),
     #配置用户上传文件后的url处理函数；
     url(r'^media/(?P<path>.*)$',serve,{'document_root':MEDIA_ROOT}),
 ]
