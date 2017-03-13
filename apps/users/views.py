@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import json
+
 from django.shortcuts import render,HttpResponse
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.backends import ModelBackend
@@ -8,7 +10,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  #密码加密函数
 
 from .models import UserProfile,EmailVerifyRecord
-from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm
+from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -166,3 +168,44 @@ class UserInfoView(LoginRequiredMixin,View):
     """
     def get(self,request):
         return render(request,'usercenter-info.html','')
+
+class UploadImageView(LoginRequiredMixin,View):
+    """
+    用户图像上传
+    """
+    #方式一
+    # def post(self,request):
+    #     image_form = UploadImageForm(request.POST,request.FILES)  #文件上传要使用request.FILES
+    #     if image_form.is_valid():
+    #         image = image_form.cleaned_data['image']
+    #         request.user.image = image
+    #         request.user.save()
+    #        pass
+
+    #方式二 利用modeform功能 save
+    def post(self,request):
+        image_form = UploadImageForm(request.POST, request.FILES,instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+
+class UpdatePwdView(LoginRequiredMixin,View):
+    """
+    个人中心里面修改密码
+    """
+    def post(self,request):
+        modify_form = ModifyPwdForm(request.POST)
+        if modify_form.is_valid():
+            pass1 = request.POST.get('password1','')
+            pass2 = request.POST.get('password2','')
+            if pass1 != pass2:
+                return HttpResponse('{"status":"fail","msg":"密码不一致"}', content_type='application/json')
+            user = request.user
+            user.password = make_password(pass1)
+            user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
