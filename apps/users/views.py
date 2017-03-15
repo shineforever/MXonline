@@ -10,7 +10,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  #密码加密函数
 
 from .models import UserProfile,EmailVerifyRecord
-from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm
+from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm,UserInfoForm
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -169,6 +169,15 @@ class UserInfoView(LoginRequiredMixin,View):
     def get(self,request):
         return render(request,'usercenter-info.html','')
 
+    def post(self,request):
+        user_info_form = UserInfoForm(request.POST,instance=request.user)  #如果不写instance，save后就相关于新增一个用户
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+
+
 class UploadImageView(LoginRequiredMixin,View):
     """
     用户图像上传
@@ -225,7 +234,7 @@ class SendEmailCodeView(LoginRequiredMixin,View):
 
 class UpdateEmailView(LoginRequiredMixin,View):
     """
-    用户修改密码，验证流程
+    用户修改邮箱，验证流程
     """
     def post(self,request):
         email = request.POST.get('email', '')
