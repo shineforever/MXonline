@@ -7,7 +7,7 @@ Created on: 2017-03-09 18:01
 
 from django.conf.urls import url,include
 
-from .views import UserInfoView,UploadImageView,UpdatePwdView,SendEmailCodeView,UpdateEmailView
+from .views import UserInfoView,UploadImageView,UpdatePwdView,SendEmailCodeView,UpdateEmailView,MyCourse
 
 urlpatterns = [
     #用户中心
@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^sendemail_code/$', SendEmailCodeView.as_view(),name="sendemail_code"),
     #更新邮箱的验证码
     url(r'^update_email/$', UpdateEmailView.as_view(),name="update_email"),
+    #我的课程
+    url(r'^mycourse/$', MyCourse.as_view(),name="mycourse"),
 ]
 
 

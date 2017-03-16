@@ -13,6 +13,7 @@ from .models import UserProfile,EmailVerifyRecord
 from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm,UserInfoForm
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
+from operation.models import UserCourse
 
 # Create your views here.
 
@@ -248,3 +249,9 @@ class UpdateEmailView(LoginRequiredMixin,View):
             return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
             return HttpResponse('{"email":"验证码出错"}', content_type='application/json')
+
+
+class MyCourse(LoginRequiredMixin,View):
+    def get(self,request):
+        usercourses = UserCourse.objects.filter(user=request.user)
+        return render(request,'usercenter-mycourse.html',{'usercourses':usercourses})
