@@ -13,7 +13,8 @@ from .models import UserProfile,EmailVerifyRecord
 from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm,UserInfoForm
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
-from operation.models import UserCourse
+from operation.models import UserCourse,UserFavorite
+from organization.models import CourseOrg,Teacher
 
 # Create your views here.
 
@@ -254,4 +255,37 @@ class UpdateEmailView(LoginRequiredMixin,View):
 class MyCourse(LoginRequiredMixin,View):
     def get(self,request):
         usercourses = UserCourse.objects.filter(user=request.user)
-        return render(request,'usercenter-mycourse.html',{'usercourses':usercourses})
+        return render(request,'usercenter-mycourse.html',{''
+                                                          'usercourses':usercourses
+                                                          })
+
+class MyFavOrg(LoginRequiredMixin,View):
+    """
+    我收藏的课程机构
+    """
+    def get(self,request):
+        org_list = []
+        fav_orgs = UserFavorite.objects.filter(user=request.user,fav_type=2)
+        for fav_org in fav_orgs:
+            org_id = fav_org.id
+            org = CourseOrg.objects.filter(id=org_id)
+            org_list.append(org)
+        return render(request,'usercenter-fav-org.html',{''
+                                                          'org_list':org_list
+                                                          })
+
+
+class MyFavTeacher(LoginRequiredMixin,View):
+    """
+    我收藏的老师
+    """
+    def get(self,request):
+        teacher_list = []
+        fav_teachers = UserFavorite.objects.filter(user=request.user,fav_type=3)
+        for fav_teacher in fav_teachers:
+            teacher_id = fav_teacher.id
+            teacher = Teacher.objects.filter(id=teacher_id)
+            teacher_list.append(teacher)
+        return render(request,'usercenter-fav-teacher.html',{''
+                                                          'teacher_list':teacher_list
+                                                          })
