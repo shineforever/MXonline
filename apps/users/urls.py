@@ -7,7 +7,7 @@ Created on: 2017-03-09 18:01
 
 from django.conf.urls import url,include
 
-from .views import UserInfoView,UploadImageView,UpdatePwdView,SendEmailCodeView,UpdateEmailView,MyCourse,MyFavOrg,MyFavTeacher
+from .views import UserInfoView,UploadImageView,UpdatePwdView,SendEmailCodeView,UpdateEmailView,MyCourse,MyFavOrg,MyFavTeacher,MyMessage
 
 urlpatterns = [
     #用户中心
@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^myfav/org/$', MyFavOrg.as_view(),name="myfav_org"),
     #我收藏的老师
     url(r'^myfav/teacher/$', MyFavTeacher.as_view(),name="myfav_teacher"),
+    #我的消息
+    url(r'^mymessage/$', MyMessage.as_view(),name="my_message"),
 ]
 
 
