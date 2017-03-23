@@ -21,6 +21,7 @@
 		<div  class=" header">
                         {% if request.user.is_authenticated %}
                 <div class="top">
+                <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
                 <div class="personal">
                             <dl class="user fr">
                                 <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
@@ -36,7 +37,7 @@
                                 </dl>
                                 <div class="btn">
 	                                <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+	                                <a class="fr" href="{% url 'logout' %}">退出</a>
                                 </div>
                             </div>
                         </div>

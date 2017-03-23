@@ -19,6 +19,7 @@
 		<div  class=" header">
             {% if request.user.is_authenticated %}
                 <div class="top">
+                <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
                 <div class="personal">
                             <dl class="user fr">
                                 <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
@@ -33,8 +34,9 @@
 	                                </dd>
                                 </dl>
                                 <div class="btn">
+
 	                                <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+	                                <a class="fr" href="{% url 'logout' %}">退出</a>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +46,6 @@
 				<div class="wp">
 					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
 					<!--登录后跳转-->
-                        <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
                         <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                        <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
 				</div>

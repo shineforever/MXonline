@@ -2,12 +2,13 @@
 
 import json
 
-from django.shortcuts import render,HttpResponse
-from django.contrib.auth import authenticate,login
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  #密码加密函数
+from django.core.urlresolvers import reverse  # url名称解析成具体的url链接地址
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
@@ -49,6 +50,16 @@ class ActiveUserView(View):
         else:
             return render(request,'active_fail.html')
         return render(request,"login.html")
+
+
+class LogoutView(View):
+    """
+    用户登出
+    """
+    def get(self,request):
+        logout(request)
+        return HttpResponseRedirect(reverse('index'))
+
 
 class LoginView(View):
     def get(self,request):
