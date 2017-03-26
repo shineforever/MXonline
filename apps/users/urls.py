@@ -27,7 +27,7 @@ urlpatterns = [
     #我收藏的老师
     url(r'^myfav/teacher/$', MyFavTeacher.as_view(),name="myfav_teacher"),
     #我的消息
-    url(r'^mymessage/$', MyMessage.as_view(),name="my_message"),
+    url(r'^mymessage/$', MyMessage.as_view(),name="mymessage"),
 ]
 
 

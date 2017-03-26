@@ -21,10 +21,12 @@
 		<div  class=" header">
                         {% if request.user.is_authenticated %}
                 <div class="top">
-                <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
+                <a href="{% url 'users:mymessage' %}">
+                    <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
+                </a>
                 <div class="personal">
                             <dl class="user fr">
-                                <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                <dd>{{ user.username }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
                                 <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ user.image }}"/></dt>
                             </dl>
                             <div class="userdetail">
@@ -56,7 +58,7 @@
 
             <div class="middle">
                 <div class="wp">
-                    <a href="index.html"><img class="fl" src="/static/images/logo.jpg"/></a>
+                    <a href="{% url 'index' %}"><img class="fl" src="/static/images/logo.jpg"/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
                             <span class="selectOption" id="jsSelectOption" data-value="course">
@@ -79,7 +81,7 @@
 				<div class="nav">
 					<div class="wp">
 						<ul>
-							<li class="active" ><a href="index.html">首页</a></li>
+							<li class="active" ><a href="{% url 'index' %}">首页</a></li>
 							<li >
 								<a href="course-list.html">
 									公开课<img class="hot" src="/static/images/nav_hot.png">

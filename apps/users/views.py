@@ -63,7 +63,7 @@ class LogoutView(View):
 
 class LoginView(View):
     def get(self,request):
-        return render(request,"login.html")
+        return render(request,"login.html",{})
 
     def post(self,request):
         login_form = LoginForm(request.POST)
@@ -188,7 +188,7 @@ class UserInfoView(LoginRequiredMixin,View):
     用户信息，需要登录才可查看
     """
     def get(self,request):
-        return render(request,'usercenter-info.html','')
+        return render(request,'usercenter-info.html',{})
 
     def post(self,request):
         user_info_form = UserInfoForm(request.POST,instance=request.user)  #如果不写instance，save后就相关于新增一个用户
@@ -315,6 +315,13 @@ class MyMessage(LoginRequiredMixin,View):
     """
     def get(self,request):
         all_messages = UserMessage.objects.filter(user=request.user.id)
+
+        # 进入到我的消息页面后，把已读的消息清空
+        all_unread_message = UserMessage.objects.filter(user=request.user.id, has_read=False)
+        for unread_message in all_unread_message:
+            unread_message.has_read = True
+            unread_message.save()
+
         # 对消息进行分页
         try:
             page = request.GET.get('page', 1)
