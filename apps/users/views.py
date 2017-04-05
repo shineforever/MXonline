@@ -12,12 +12,13 @@ from django.core.urlresolvers import reverse  # url名称解析成具体的url�
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import UserProfile,EmailVerifyRecord
+from .models import UserProfile,EmailVerifyRecord,Banner
 from .forms import LoginForm,RegisterForm,ForgetForm,ModifyPwdForm,UploadImageForm,UserInfoForm
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
 from operation.models import UserCourse,UserFavorite,UserMessage
 from organization.models import CourseOrg,Teacher
+from courses.models import Course
 
 # Create your views here.
 
@@ -336,3 +337,23 @@ class MyMessage(LoginRequiredMixin,View):
         return render(request,'usercenter-message.html',{
                                                         'messages':messages
                                                           })
+
+
+class IndexView(View):
+    """
+    首页
+    """
+    def get(self,request):
+        #取出所有的轮播图
+        all_banners = Banner.objects.all().order_by('index')
+        #取出非banner类型的课程:
+        courses = Course.objects.filter(is_banner=False)[:6]
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        course_orgs = CourseOrg.objects.all()[:15]
+        return render(request,'index.html',{
+            'all_banners':all_banners,
+            'courses':courses,
+            'banner_courses':banner_courses,
+            'course_orgs':course_orgs
+
+        })

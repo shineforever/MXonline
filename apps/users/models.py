@@ -68,3 +68,5 @@ class Banner(models.Model):
         verbose_name = u'轮播图'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return self.title

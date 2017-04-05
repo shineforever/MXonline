@@ -17,6 +17,7 @@ class Course(models.Model):
     course_org = models.ForeignKey(CourseOrg,verbose_name=u"课程机构",null=True,blank=True)
     desc = models.CharField(max_length=300,verbose_name=u'课程描述')
     detail = models.TextField(verbose_name=u'课程详情')
+    is_banner = models.BooleanField(verbose_name=u'是否banner',default=False)
     teacher = models.ForeignKey(Teacher,verbose_name=u'授课老师',null=True,blank=True)  #为什么这个地方不是有default，因为这个是外键，定义了默认值，只能是允许为空
     degree = models.CharField(choices=(('cj',u'初级'),('zj',u'中级'),('gj',u'高级')),max_length=2,verbose_name=u'难度等级')
     learn_times = models.IntegerField(default=0,verbose_name=u'学习时长(分钟数)')

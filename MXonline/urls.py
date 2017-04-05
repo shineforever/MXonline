@@ -22,14 +22,16 @@ from django.views.generic import TemplateView
 import xadmin
 from django.views.static import serve
 
-from users.views import LoginView,LogoutView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
+from users.views import LoginView,LogoutView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView,IndexView
 from MXonline.settings import MEDIA_ROOT
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^captcha/', include('captcha.urls')),
-    url(r'^$', TemplateView.as_view(template_name="index.html"),name="index"),
+    # url(r'^$', TemplateView.as_view(template_name="index.html"),name="index"), #静态页面使用TemplateView
+    #网站首页
+    url(r'^$', IndexView.as_view(),name="index"),
     url(r'^login/$', LoginView.as_view(),name="login"),
     url(r'^logout/$', LogoutView.as_view(),name="logout"),
     url(r'^register/$', RegisterView.as_view(),name="register"),
