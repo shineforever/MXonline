@@ -10,7 +10,10 @@ class CourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree','learn_times','students','fav_nums','image','click_nums','add_time']
     search_fields = ['name', 'desc', 'detail', 'degree','learn_times','students','fav_nums','image','click_nums']
     list_filter = ['name', 'desc', 'detail', 'degree','learn_times','students','fav_nums','image','click_nums','add_time']
-
+    model_icon = 'fa fa-user'  # 自定义icon，查看网站 http://fontawesome.io/
+    ordering = ['-click_nums']   #按指定字段排序
+    readonly_fields = ['click_nums']    #指定字段后台管理只读
+    exclude = ['fav_nums']  #在后台指定哪些字段不显示
 
 class LessonAdmin(object):
     list_display = ['course','name','add_time']
